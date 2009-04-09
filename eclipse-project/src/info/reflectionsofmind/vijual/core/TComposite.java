@@ -1,31 +1,19 @@
-package info.reflectionsofmind.vijual.core.tuple;
+package info.reflectionsofmind.vijual.core;
 
-import info.reflectionsofmind.vijual.core.IType;
-import info.reflectionsofmind.vijual.core.TVariable;
 
 import java.util.Arrays;
-import java.util.List;
 
-public class TTuple implements IType
+public abstract class TComposite implements IType
 {
 	private final IType[] componentTypes;
 
-	public TTuple(final IType... componentTypes)
+	public TComposite(final IType... componentTypes)
 	{
 		this.componentTypes = componentTypes;
 	}
 	
-	public TTuple recreate(IType... componentTypes)
-	{
-		return new TTuple(componentTypes);
-	}
+	public abstract TComposite recreate(IType... componentTypes);
 	
-	@Override
-	public List<IType> getConstructors()
-	{
-		return null;
-	}
-
 	@Override
 	public IType substitute(final TVariable variable, final IType substitution)
 	{
@@ -46,7 +34,7 @@ public class TTuple implements IType
 	public boolean equals(final Object obj)
 	{
 		if (obj.getClass() != this.getClass()) return false;
-		final TTuple type = (TTuple) obj;
+		final TComposite type = (TComposite) obj;
 		return Arrays.deepEquals(getComponentTypes(), type.getComponentTypes());
 	}
 }

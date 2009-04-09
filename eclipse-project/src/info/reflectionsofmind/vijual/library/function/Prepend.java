@@ -8,8 +8,8 @@ import info.reflectionsofmind.vijual.core.TVariable;
 import info.reflectionsofmind.vijual.core.exception.EvaluationException;
 import info.reflectionsofmind.vijual.core.exception.TypingException;
 import info.reflectionsofmind.vijual.core.util.DerivedFunction;
-import info.reflectionsofmind.vijual.library.type.TList;
-import info.reflectionsofmind.vijual.library.value.VList;
+import info.reflectionsofmind.vijual.library.data.list.TList;
+import info.reflectionsofmind.vijual.library.data.list.VList;
 
 public final class Prepend implements IFunction
 {

@@ -2,9 +2,8 @@ package info.reflectionsofmind.vijual.core;
 
 import java.util.List;
 
-import info.reflectionsofmind.vijual.core.tuple.TTuple;
 
-public final class TFunction extends TTuple
+public final class TFunction extends TComposite
 {
 	public TFunction(IType arg, IType res)
 	{
@@ -12,13 +11,13 @@ public final class TFunction extends TTuple
 	}
 	
 	@Override
-	public List<IType> getConstructors()
+	public List<? extends IConstructor<TFunction>> getConstructors()
 	{
 		throw new UnsupportedOperationException("Functions cannot be constructed.");
 	}
 	
 	@Override
-	public TTuple recreate(IType... typeArgs)
+	public TComposite recreate(IType... typeArgs)
 	{
 		return new TFunction(typeArgs[0], typeArgs[1]);
 	}

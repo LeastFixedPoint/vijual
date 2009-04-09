@@ -1,10 +1,11 @@
 package info.reflectionsofmind.vijual.core;
 
-import java.util.List;
+import info.reflectionsofmind.vijual.core.exception.TypingException;
 
-public interface IConstructor extends IValue
+
+public interface IConstructor<TType extends IType> extends IValue
 {
 	IType[] getArgumentTypes();
-	IType getConstructedType();
-	ILazy construct(ILazy... args);
+	TType getConstructedType();
+	ILazy construct(ILazy... args) throws TypingException;
 }

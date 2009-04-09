@@ -1,8 +1,7 @@
-package info.reflectionsofmind.vijual.library.value;
+package info.reflectionsofmind.vijual.library.data.integer;
 
 import info.reflectionsofmind.vijual.core.IType;
 import info.reflectionsofmind.vijual.core.IValue;
-import info.reflectionsofmind.vijual.library.type.TInteger;
 
 public final class VInteger implements IValue
 {

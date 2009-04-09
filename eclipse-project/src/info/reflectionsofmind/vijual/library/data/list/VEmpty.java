@@ -1,13 +1,17 @@
-package info.reflectionsofmind.vijual.library.value;
+package info.reflectionsofmind.vijual.library.data.list;
 
 import info.reflectionsofmind.vijual.core.IType;
 import info.reflectionsofmind.vijual.core.IValue;
 import info.reflectionsofmind.vijual.core.TVariable;
-import info.reflectionsofmind.vijual.library.type.TList;
 
-public final class VNil implements IValue
+public final class VEmpty implements IValue
 {
-	private final IType type = new TList(new TVariable("a", VNil.class));
+	private final IType type = new TList(new TVariable("a", VEmpty.class));
+	public static final VEmpty INSTANCE = new VEmpty();
+	
+	private VEmpty()
+	{
+	}
 
 	@Override
 	public IType getType()
