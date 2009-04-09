@@ -7,8 +7,8 @@ import info.reflectionsofmind.vijual.core.TFunction;
 import info.reflectionsofmind.vijual.core.exception.EvaluationException;
 import info.reflectionsofmind.vijual.core.exception.TypingException;
 import info.reflectionsofmind.vijual.core.util.DerivedFunction;
-import info.reflectionsofmind.vijual.library.type.TInteger;
-import info.reflectionsofmind.vijual.library.value.VInteger;
+import info.reflectionsofmind.vijual.library.data.integer.TInteger;
+import info.reflectionsofmind.vijual.library.data.integer.VInteger;
 
 public final class IntSum implements IFunction
 {

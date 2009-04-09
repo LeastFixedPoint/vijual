@@ -10,9 +10,9 @@ import info.reflectionsofmind.vijual.core.TVariable;
 import info.reflectionsofmind.vijual.core.exception.EvaluationException;
 import info.reflectionsofmind.vijual.core.exception.TypingException;
 import info.reflectionsofmind.vijual.core.util.DerivedFunction;
-import info.reflectionsofmind.vijual.library.type.TList;
-import info.reflectionsofmind.vijual.library.value.VList;
-import info.reflectionsofmind.vijual.library.value.VNil;
+import info.reflectionsofmind.vijual.library.data.list.TList;
+import info.reflectionsofmind.vijual.library.data.list.VList;
+import info.reflectionsofmind.vijual.library.data.list.VEmpty;
 
 public final class Map implements IFunction
 {
@@ -45,7 +45,7 @@ public final class Map implements IFunction
 					
 					return new LValue(new VList(newHead, newTail));
 				}
-				else if (evList instanceof VNil)
+				else if (evList instanceof VEmpty)
 				{
 					return new LValue(evList);
 				}

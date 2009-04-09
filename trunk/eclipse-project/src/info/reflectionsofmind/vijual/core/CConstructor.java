@@ -1,20 +1,22 @@
 package info.reflectionsofmind.vijual.core;
 
-import info.reflectionsofmind.vijual.core.util.Types;
-
-import java.util.List;
-
-public abstract class CConstructor implements IConstructor
+public abstract class CConstructor<TType extends IType> implements IConstructor<TType>
 {
 	private final IType[] argumentTypes;
-	private final IType constructedType;
+	private final TType constructedType;
 	private final IType type;
 
-	public CConstructor(final IType type, final IType... args)
+	public CConstructor(final TType constructedType, final IType... args)
 	{
 		this.argumentTypes = args;
-		this.constructedType = type;
-		this.type = Types.curry(this.argumentTypes, this.constructedType);
+		this.constructedType = constructedType;
+
+		IType type = this.constructedType;
+
+		for (int i = this.argumentTypes.length - 1; i > 0; --i)
+			type = new TFunction(this.argumentTypes[i], type);
+
+		this.type = type;
 	}
 
 	@Override
@@ -29,7 +31,7 @@ public abstract class CConstructor implements IConstructor
 		return this.argumentTypes;
 	}
 
-	public IType getConstructedType()
+	public TType getConstructedType()
 	{
 		return this.constructedType;
 	}

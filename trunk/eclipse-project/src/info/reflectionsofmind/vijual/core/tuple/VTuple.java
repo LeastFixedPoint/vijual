@@ -3,6 +3,7 @@ package info.reflectionsofmind.vijual.core.tuple;
 import info.reflectionsofmind.vijual.core.ILazy;
 import info.reflectionsofmind.vijual.core.IType;
 import info.reflectionsofmind.vijual.core.IValue;
+import info.reflectionsofmind.vijual.core.TComposite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public class VTuple implements IValue
 {
 	private final ILazy[] components;
-	private final TTuple type;
+	private final TComposite type;
 
 	public VTuple(ILazy... components)
 	{

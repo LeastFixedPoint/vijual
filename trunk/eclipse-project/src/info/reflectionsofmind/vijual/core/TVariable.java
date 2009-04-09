@@ -1,5 +1,7 @@
 package info.reflectionsofmind.vijual.core;
 
+import java.util.List;
+
 public final class TVariable implements IType
 {
 	private final String id;
@@ -23,6 +25,12 @@ public final class TVariable implements IType
 	public IType substitute(TVariable variable, IType substitution)
 	{
 		return this == variable ? substitution : this;
+	}
+	
+	@Override
+	public List<? extends IConstructor<?>> getConstructors()
+	{
+		throw new UnsupportedOperationException("Type variables cannot be constructed: " + this);
 	}
 	
 	@Override

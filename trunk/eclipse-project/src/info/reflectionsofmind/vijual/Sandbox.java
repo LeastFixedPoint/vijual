@@ -1,10 +1,10 @@
 package info.reflectionsofmind.vijual;
 
+import info.reflectionsofmind.vijual.library.data.integer.VInteger;
+import info.reflectionsofmind.vijual.library.data.list.VEmpty;
 import info.reflectionsofmind.vijual.library.function.IntSum;
 import info.reflectionsofmind.vijual.library.function.Map;
 import info.reflectionsofmind.vijual.library.function.Prepend;
-import info.reflectionsofmind.vijual.library.value.VInteger;
-import info.reflectionsofmind.vijual.library.value.VNil;
 import info.reflectionsofmind.vijual.node.NApply;
 import info.reflectionsofmind.vijual.node.NValue;
 
@@ -20,7 +20,7 @@ public class Sandbox extends JFrame
 		final NApply plus1 = new NApply(new NValue(IntSum.INSTANCE), v2); // -> "2+"
 		final NApply plus2 = new NApply(plus1, v3); // -> "2+3"
 		final NApply prepend1 = new NApply(new NValue(Prepend.INSTANCE), plus2); // -> "2+3 :"
-		final NApply prepend2 = new NApply(prepend1, new NValue(new VNil())); // -> "2+3 : nil"
+		final NApply prepend2 = new NApply(prepend1, new NValue(new VEmpty())); // -> "2+3 : nil"
 		final NApply prepend3 = new NApply(new NValue(Prepend.INSTANCE), v2); // -> "2 :"
 		final NApply prepend4 = new NApply(prepend3, prepend2); // -> "2 : 2+3 : nil"
 		final NApply map1 = new NApply(new NValue(Map.INSTANCE), plus1); // -> "map (2+)"

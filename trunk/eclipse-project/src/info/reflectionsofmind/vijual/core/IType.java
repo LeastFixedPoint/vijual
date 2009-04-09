@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface IType
 {
-	List<IType> getConstructors();
+	List<? extends IConstructor<? extends IType>> getConstructors();
 	IType substitute(TVariable variable, IType substitution);
 }
