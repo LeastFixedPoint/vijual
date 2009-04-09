@@ -7,7 +7,7 @@ import info.reflectionsofmind.vijual.library.type.TList;
 
 public final class VNil implements IValue
 {
-	private final IType type = new TList(new TVariable(VNil.class.getSimpleName() + ".a"));
+	private final IType type = new TList(new TVariable("a", VNil.class));
 
 	@Override
 	public IType getType()

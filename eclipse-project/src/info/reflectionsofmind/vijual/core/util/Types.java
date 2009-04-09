@@ -1,10 +1,10 @@
 package info.reflectionsofmind.vijual.core.util;
 
 import info.reflectionsofmind.vijual.core.IType;
-import info.reflectionsofmind.vijual.core.TComposite;
 import info.reflectionsofmind.vijual.core.TFunction;
 import info.reflectionsofmind.vijual.core.TVariable;
 import info.reflectionsofmind.vijual.core.exception.TypingException;
+import info.reflectionsofmind.vijual.core.tuple.TTuple;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,12 +91,12 @@ public final class Types
 	{
 		if (type instanceof TVariable) return var == type;
 
-		if (type instanceof TComposite)
+		if (type instanceof TTuple)
 		{
-			for (final IType arg : ((TComposite) type).getTypeArgs())
+			for (final IType arg : ((TTuple) type).getComponentTypes())
 			{
 				if (arg == var) return true;
-				if (arg instanceof TComposite && contains(var, arg)) return true;
+				if (arg instanceof TTuple && contains(var, arg)) return true;
 			}
 		}
 
@@ -109,14 +109,14 @@ public final class Types
 
 		if (left.equals(right)) return eqs;
 
-		if (left instanceof TComposite && right instanceof TComposite)
+		if (left instanceof TTuple && right instanceof TTuple)
 		{
 			if (left.getClass() != right.getClass()) throw new TypingException("Cannot refine types " + left + " and " + right);
 
-			for (int i = 0; i < ((TComposite) left).getTypeArgs().length; i++)
+			for (int i = 0; i < ((TTuple) left).getComponentTypes().length; i++)
 			{
-				final IType newL = ((TComposite) left).getTypeArgs()[i];
-				final IType newR = ((TComposite) right).getTypeArgs()[i];
+				final IType newL = ((TTuple) left).getComponentTypes()[i];
+				final IType newR = ((TTuple) right).getComponentTypes()[i];
 
 				eqs.addAll(refine(newL, newR));
 			}
@@ -147,7 +147,7 @@ public final class Types
 
 		public boolean solvable()
 		{
-			if (getType() instanceof TComposite) return !Types.contains(getVar(), getType());
+			if (getType() instanceof TTuple) return !Types.contains(getVar(), getType());
 
 			return true;
 		}

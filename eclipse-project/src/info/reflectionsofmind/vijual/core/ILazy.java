@@ -6,5 +6,5 @@ import info.reflectionsofmind.vijual.core.exception.TypingException;
 public interface ILazy
 {
 	IValue evaluate() throws EvaluationException, TypingException;
-	IType getType() throws TypingException;
+	IType getType();
 }

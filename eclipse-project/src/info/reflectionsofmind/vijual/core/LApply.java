@@ -25,7 +25,7 @@ public final class LApply implements ILazy
 	}
 
 	@Override
-	public IType getType() throws TypingException
+	public IType getType()
 	{
 		return this.type;
 	}

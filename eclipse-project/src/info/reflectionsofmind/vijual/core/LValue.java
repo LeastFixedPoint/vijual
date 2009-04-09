@@ -19,7 +19,7 @@ public final class LValue implements ILazy
 	}
 	
 	@Override
-	public IType getType() throws TypingException
+	public IType getType()
 	{
 		return this.value.getType();
 	}

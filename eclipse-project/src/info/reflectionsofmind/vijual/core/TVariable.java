@@ -14,6 +14,11 @@ public final class TVariable implements IType
 		this.id = id;
 	}
 	
+	public TVariable(String id, Class<?> owner)
+	{
+		this.id = owner.getSimpleName() + "." + id;
+	}
+	
 	@Override
 	public IType substitute(TVariable variable, IType substitution)
 	{
