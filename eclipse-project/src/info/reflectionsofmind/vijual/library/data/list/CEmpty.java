@@ -8,8 +8,9 @@ import info.reflectionsofmind.vijual.core.TVariable;
 public class CEmpty extends CConstructor<TList>
 {
 	private static final TList TYPE = new TList(new TVariable("a", CEmpty.class));
+	public static final CEmpty INSTANCE = new CEmpty();
 
-	public CEmpty()
+	private CEmpty()
 	{
 		super(TYPE);
 	}

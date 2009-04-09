@@ -9,8 +9,9 @@ import info.reflectionsofmind.vijual.core.exception.TypingException;
 public class CPrepend extends CConstructor<TList>
 {
 	private static final TVariable a = new TVariable("a", CPrepend.class);
+	public static final CPrepend INSTANCE = new CPrepend();
 	
-	public CPrepend()
+	private CPrepend()
 	{
 		super(new TList(a), a, new TList(a));
 	}

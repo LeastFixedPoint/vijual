@@ -10,7 +10,6 @@ public abstract class TScalar implements IType
 		return this;
 	}
 
-	
 	@Override
 	public List<? extends IConstructor<? extends IType>> getConstructors()
 	{
