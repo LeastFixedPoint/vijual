@@ -1,12 +1,12 @@
 package info.reflectionsofmind.vijual.library.function;
 
-import info.reflectionsofmind.vijual.core.IFunction;
-import info.reflectionsofmind.vijual.core.ILazy;
-import info.reflectionsofmind.vijual.core.LValue;
-import info.reflectionsofmind.vijual.core.TFunction;
-import info.reflectionsofmind.vijual.core.exception.EvaluationException;
-import info.reflectionsofmind.vijual.core.exception.TypingException;
-import info.reflectionsofmind.vijual.core.util.DerivedFunction;
+import info.reflectionsofmind.vijual.core.lazy.IFunction;
+import info.reflectionsofmind.vijual.core.lazy.ILazy;
+import info.reflectionsofmind.vijual.core.lazy.LValue;
+import info.reflectionsofmind.vijual.core.lazy.TFunction;
+import info.reflectionsofmind.vijual.core.lazy.exception.EvaluationException;
+import info.reflectionsofmind.vijual.core.lazy.exception.TypingException;
+import info.reflectionsofmind.vijual.core.lazy.util.DerivedFunction;
 import info.reflectionsofmind.vijual.library.data.integer.TInteger;
 import info.reflectionsofmind.vijual.library.data.integer.VInteger;
 
@@ -37,5 +37,11 @@ public final class IntSum implements IFunction
 				return new LValue(new VInteger(((VInteger) lazy1.evaluate()).getValue() + ((VInteger) lazy2.evaluate()).getValue()));
 			}
 		}.toLazy();
+	}
+	
+	@Override
+	public String toString()
+	{
+		return IntSum.class.getSimpleName();
 	}
 }

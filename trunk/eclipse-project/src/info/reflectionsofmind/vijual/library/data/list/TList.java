@@ -1,8 +1,8 @@
 package info.reflectionsofmind.vijual.library.data.list;
 
-import info.reflectionsofmind.vijual.core.IConstructor;
-import info.reflectionsofmind.vijual.core.IType;
-import info.reflectionsofmind.vijual.core.TComposite;
+import info.reflectionsofmind.vijual.core.lazy.IConstructor;
+import info.reflectionsofmind.vijual.core.lazy.IType;
+import info.reflectionsofmind.vijual.core.lazy.TComposite;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,15 +1,15 @@
 package info.reflectionsofmind.vijual.library.function;
 
-import info.reflectionsofmind.vijual.core.IFunction;
-import info.reflectionsofmind.vijual.core.ILazy;
-import info.reflectionsofmind.vijual.core.IValue;
-import info.reflectionsofmind.vijual.core.LApply;
-import info.reflectionsofmind.vijual.core.LValue;
-import info.reflectionsofmind.vijual.core.TFunction;
-import info.reflectionsofmind.vijual.core.TVariable;
-import info.reflectionsofmind.vijual.core.exception.EvaluationException;
-import info.reflectionsofmind.vijual.core.exception.TypingException;
-import info.reflectionsofmind.vijual.core.util.DerivedFunction;
+import info.reflectionsofmind.vijual.core.lazy.IFunction;
+import info.reflectionsofmind.vijual.core.lazy.ILazy;
+import info.reflectionsofmind.vijual.core.lazy.IValue;
+import info.reflectionsofmind.vijual.core.lazy.LApply;
+import info.reflectionsofmind.vijual.core.lazy.LValue;
+import info.reflectionsofmind.vijual.core.lazy.TFunction;
+import info.reflectionsofmind.vijual.core.lazy.TVariable;
+import info.reflectionsofmind.vijual.core.lazy.exception.EvaluationException;
+import info.reflectionsofmind.vijual.core.lazy.exception.TypingException;
+import info.reflectionsofmind.vijual.core.lazy.util.DerivedFunction;
 import info.reflectionsofmind.vijual.library.data.list.TList;
 import info.reflectionsofmind.vijual.library.data.list.VList;
 import info.reflectionsofmind.vijual.library.data.list.VEmpty;

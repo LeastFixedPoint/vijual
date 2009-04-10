@@ -1,6 +1,6 @@
 package info.reflectionsofmind.vijual.library.data.integer;
 
-import info.reflectionsofmind.vijual.core.TScalar;
+import info.reflectionsofmind.vijual.core.lazy.TScalar;
 
 public final class TInteger extends TScalar
 {
