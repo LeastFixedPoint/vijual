@@ -1,10 +1,10 @@
 package info.reflectionsofmind.vijual.library.data.list;
 
-import info.reflectionsofmind.vijual.core.CConstructor;
-import info.reflectionsofmind.vijual.core.ILazy;
-import info.reflectionsofmind.vijual.core.LValue;
-import info.reflectionsofmind.vijual.core.TVariable;
-import info.reflectionsofmind.vijual.core.exception.TypingException;
+import info.reflectionsofmind.vijual.core.lazy.CConstructor;
+import info.reflectionsofmind.vijual.core.lazy.ILazy;
+import info.reflectionsofmind.vijual.core.lazy.LValue;
+import info.reflectionsofmind.vijual.core.lazy.TVariable;
+import info.reflectionsofmind.vijual.core.lazy.exception.TypingException;
 
 public class CPrepend extends CConstructor<TList>
 {

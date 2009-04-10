@@ -1,10 +1,10 @@
 package info.reflectionsofmind.vijual.library.data.list;
 
-import info.reflectionsofmind.vijual.core.ILazy;
-import info.reflectionsofmind.vijual.core.IType;
-import info.reflectionsofmind.vijual.core.IValue;
-import info.reflectionsofmind.vijual.core.exception.TypingException;
-import info.reflectionsofmind.vijual.core.util.Types;
+import info.reflectionsofmind.vijual.core.lazy.ILazy;
+import info.reflectionsofmind.vijual.core.lazy.IType;
+import info.reflectionsofmind.vijual.core.lazy.IValue;
+import info.reflectionsofmind.vijual.core.lazy.exception.TypingException;
+import info.reflectionsofmind.vijual.core.lazy.util.Types;
 
 public class VList implements IValue
 {
