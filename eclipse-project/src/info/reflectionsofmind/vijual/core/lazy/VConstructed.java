@@ -1,23 +1,21 @@
 package info.reflectionsofmind.vijual.core.lazy;
 
-import info.reflectionsofmind.vijual.core.lazy.util.Types;
+import java.util.Arrays;
 
-import java.util.List;
+import info.reflectionsofmind.vijual.core.lazy.util.Types;
 
 public class VConstructed<TType extends IType, TConstructor extends IConstructor<TType>> implements IValue
 {
 	private final TConstructor constructor;
-	private final List<ILazy> arguments;
+	private final ILazy[] arguments;
 
-	public VConstructed(TConstructor constructor, List<ILazy> arguments)
+	public VConstructed(TConstructor constructor, ILazy... arguments)
 	{
 		this.constructor = constructor;
 		this.arguments = arguments;
 
-		if (constructor.getArgumentTypes())
-
 		for (int i = 0; i < constructor.getArgumentTypes().length; i++)
-			Types.solve(constructor.getArgumentTypes()[i], arguments.get(i).getType());
+			Types.solve(constructor.getArgumentTypes()[i], arguments[i].getType());
 	}
 
 	@Override
@@ -32,8 +30,19 @@ public class VConstructed<TType extends IType, TConstructor extends IConstructor
 		return this.constructor.getConstructedType();
 	}
 
-	public List<ILazy> getArguments()
+	public ILazy[] getArguments()
 	{
 		return this.arguments;
+	}
+	
+	public ILazy toLazy()
+	{
+		return new LValue(this);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "[" + getConstructor().toString() + ": " + Arrays.toString(getArguments()) + "]";
 	}
 }

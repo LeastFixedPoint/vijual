@@ -23,6 +23,12 @@ public abstract class CConstructor<TType extends IType> implements IConstructor<
 
 		this.type = type;
 	}
+	
+	@Override
+	public ILazy construct(ILazy... args) throws TypingException
+	{
+		return new VConstructed<TType, CConstructor<TType>>(this, args).toLazy();
+	}
 
 	@Override
 	public IConstructor<? extends IType> getConstructor()
@@ -77,5 +83,11 @@ public abstract class CConstructor<TType extends IType> implements IConstructor<
 				}.toLazy();
 			}
 		});
+	}
+	
+	@Override
+	public String toString()
+	{
+		return getClass().getSimpleName();
 	}
 }
