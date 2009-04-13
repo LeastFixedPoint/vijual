@@ -1,9 +1,9 @@
 package info.reflectionsofmind.vijual.core.lazy;
 
-import java.util.Arrays;
-
 import info.reflectionsofmind.vijual.core.lazy.exception.EvaluationException;
 import info.reflectionsofmind.vijual.core.lazy.exception.TypingException;
+
+import java.util.Arrays;
 
 public abstract class CConstructor<TType extends IType> implements IConstructor<TType>
 {
@@ -25,6 +25,12 @@ public abstract class CConstructor<TType extends IType> implements IConstructor<
 	}
 
 	@Override
+	public IConstructor<? extends IType> getConstructor()
+	{
+		throw new RuntimeException("Constructors don't have constructors.");
+	}
+
+	@Override
 	public IType getType()
 	{
 		return this.type;
@@ -40,7 +46,7 @@ public abstract class CConstructor<TType extends IType> implements IConstructor<
 	{
 		return this.constructedType;
 	}
-	
+
 	public ILazy toLazy()
 	{
 		try
@@ -52,7 +58,7 @@ public abstract class CConstructor<TType extends IType> implements IConstructor<
 			throw new RuntimeException("Caught typing error on nullary constructor!?", exception);
 		}
 
-		return new LValue(new IFunction()
+		return new LValue(new FFunction((TFunction) this.type)
 		{
 			@Override
 			public ILazy apply(final ILazy lazy) throws EvaluationException, TypingException
@@ -65,16 +71,10 @@ public abstract class CConstructor<TType extends IType> implements IConstructor<
 						final ILazy[] allArgs = new ILazy[args.length + 1];
 						allArgs[0] = lazy;
 						System.arraycopy(args, 0, allArgs, 1, args.length);
-						
+
 						return CConstructor.this.construct(allArgs);
 					}
 				}.toLazy();
-			}
-
-			@Override
-			public TFunction getType()
-			{
-				return (TFunction) CConstructor.this.type;
 			}
 		});
 	}

@@ -46,10 +46,10 @@ public final class EVariable extends Expression
 	{
 		return this.type;
 	}
-	
+
 	@Override
 	public String toString()
 	{
-		return "[variable(" + names.get(this) + "): " + getType() + "]";
+		return "[var(" + names.get(this) + "): " + getType() + "]";
 	}
 }
