@@ -2,7 +2,6 @@ package info.reflectionsofmind.vijual.core.expression;
 
 import info.reflectionsofmind.util.Lists;
 import info.reflectionsofmind.vijual.core.lazy.FFunction;
-import info.reflectionsofmind.vijual.core.lazy.IFunction;
 import info.reflectionsofmind.vijual.core.lazy.ILazy;
 import info.reflectionsofmind.vijual.core.lazy.IType;
 import info.reflectionsofmind.vijual.core.lazy.LApply;
@@ -28,7 +27,7 @@ public final class EApplication extends Expression
 		this.variables = Lists.concat(this.function.getVariables(), this.argument.getVariables());
 
 		IType type = Types.resolve((TFunction) function.getType(), argument.getType());
-		
+
 		for (int i = this.variables.size() - 1; i >= 0; --i)
 			type = new TFunction(this.variables.get(i).getType(), type);
 
