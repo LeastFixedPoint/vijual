@@ -1,12 +1,9 @@
 package info.reflectionsofmind.vijual.core.expression;
 
-import info.reflectionsofmind.vijual.core.lazy.ILazy;
-import info.reflectionsofmind.vijual.core.lazy.IType;
-import info.reflectionsofmind.vijual.core.lazy.IValue;
-import info.reflectionsofmind.vijual.core.lazy.LValue;
-
-import java.util.Collections;
-import java.util.List;
+import info.reflectionsofmind.vijual.core.ILazy;
+import info.reflectionsofmind.vijual.core.LValue;
+import info.reflectionsofmind.vijual.core.type.IType;
+import info.reflectionsofmind.vijual.core.value.IValue;
 
 public final class EConstant extends Expression
 {
@@ -32,12 +29,6 @@ public final class EConstant extends Expression
 	public Expression substitute(EVariable variable, Expression expression)
 	{
 		return this;
-	}
-
-	@Override
-	public List<EVariable> getVariables()
-	{
-		return Collections.emptyList();
 	}
 
 	@Override

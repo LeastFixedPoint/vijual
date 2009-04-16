@@ -1,6 +1,9 @@
 package info.reflectionsofmind.util;
 
+import info.reflectionsofmind.vijual.core.type.ITypeDefined;
+
 import java.util.AbstractList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class Lists
@@ -26,5 +29,10 @@ public final class Lists
 				return left.size() + right.size();
 			}
 		};
+	}
+
+	public static <T> T[] subArrayFrom(int from, T[] array)
+	{
+		return Arrays.copyOfRange(array, from, array.length);
 	}
 }

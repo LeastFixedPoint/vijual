@@ -1,72 +1,42 @@
 package info.reflectionsofmind.vijual.core.expression;
 
-import info.reflectionsofmind.util.Lists;
-import info.reflectionsofmind.vijual.core.lazy.FFunction;
-import info.reflectionsofmind.vijual.core.lazy.ILazy;
-import info.reflectionsofmind.vijual.core.lazy.IType;
-import info.reflectionsofmind.vijual.core.lazy.LApply;
-import info.reflectionsofmind.vijual.core.lazy.LValue;
-import info.reflectionsofmind.vijual.core.lazy.TFunction;
-import info.reflectionsofmind.vijual.core.lazy.exception.EvaluationException;
-import info.reflectionsofmind.vijual.core.lazy.exception.TypingException;
-import info.reflectionsofmind.vijual.core.lazy.util.Types;
-
-import java.util.List;
+import info.reflectionsofmind.vijual.core.ILazy;
+import info.reflectionsofmind.vijual.core.LApply;
+import info.reflectionsofmind.vijual.core.type.IType;
+import info.reflectionsofmind.vijual.core.util.Types;
+import info.reflectionsofmind.vijual.library.type.function.TFunctionConstructor;
 
 public final class EApplication extends Expression
 {
-	private final List<EVariable> variables;
 	private final Expression function;
 	private final Expression argument;
-	private final IType type;
+	private final IType<?> type;
 
 	public EApplication(final Expression function, final Expression argument)
 	{
 		this.function = function;
 		this.argument = argument;
-		this.variables = Lists.concat(this.function.getVariables(), this.argument.getVariables());
 
-		IType type = Types.resolve((TFunction) function.getType(), argument.getType());
-
-		for (int i = this.variables.size() - 1; i >= 0; --i)
-			type = new TFunction(this.variables.get(i).getType(), type);
-
-		this.type = type;
+		this.type = Types.resolve((TFunctionConstructor) function.getType(), argument.getType());
 	}
 
 	@Override
 	public ILazy toLazy()
 	{
-		if (this.variables.isEmpty()) return new LApply(this.function.toLazy(), this.argument.toLazy());
-
-		return new LValue(new FFunction((TFunction) EApplication.this.getType())
-		{
-			@Override
-			public ILazy apply(ILazy lazy) throws EvaluationException, TypingException
-			{
-				return EApplication.this.substitute(getVariables().get(0), new EConstant(lazy)).toLazy();
-			}
-		});
+		return new LApply(this.function.toLazy(), this.argument.toLazy());
 	}
 
 	@Override
 	public Expression substitute(EVariable variable, Expression expression)
 	{
-		if (getVariables().isEmpty()) return this;
+		final Expression newFunction = getFunction().substitute(variable, expression);
+		final Expression newArgument = getArgument().substitute(variable, expression);
 
-		return new EApplication(//
-				getFunction().substitute(variable, expression), //
-				getArgument().substitute(variable, expression));
+		return (newFunction == this.function && newArgument == this.argument) ? this : new EApplication(newFunction, newArgument);
 	}
 
 	@Override
-	public List<EVariable> getVariables()
-	{
-		return this.variables;
-	}
-
-	@Override
-	public IType getType()
+	public IType<?> getType()
 	{
 		return this.type;
 	}

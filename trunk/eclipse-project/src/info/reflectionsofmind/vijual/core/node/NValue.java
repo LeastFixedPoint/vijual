@@ -1,11 +1,11 @@
 package info.reflectionsofmind.vijual.core.node;
 
-import info.reflectionsofmind.vijual.core.lazy.ILazy;
-import info.reflectionsofmind.vijual.core.lazy.IType;
-import info.reflectionsofmind.vijual.core.lazy.IValue;
-import info.reflectionsofmind.vijual.core.lazy.LValue;
-import info.reflectionsofmind.vijual.core.lazy.exception.TypingException;
-import info.reflectionsofmind.vijual.core.lazy.exception.ValueNotSetException;
+import info.reflectionsofmind.vijual.core.ILazy;
+import info.reflectionsofmind.vijual.core.LValue;
+import info.reflectionsofmind.vijual.core.exception.TypingException;
+import info.reflectionsofmind.vijual.core.exception.ValueNotSetException;
+import info.reflectionsofmind.vijual.core.type.IType;
+import info.reflectionsofmind.vijual.core.value.IValue;
 
 public final class NValue implements INode
 {

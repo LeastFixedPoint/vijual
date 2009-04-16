@@ -1,45 +1,51 @@
 package info.reflectionsofmind.vijual.core.expression;
 
-import info.reflectionsofmind.vijual.core.lazy.FFunction;
-import info.reflectionsofmind.vijual.core.lazy.IConstructor;
-import info.reflectionsofmind.vijual.core.lazy.ILazy;
-import info.reflectionsofmind.vijual.core.lazy.IType;
-import info.reflectionsofmind.vijual.core.lazy.TFunction;
-import info.reflectionsofmind.vijual.core.lazy.exception.EvaluationException;
-import info.reflectionsofmind.vijual.core.lazy.exception.TypingException;
+import info.reflectionsofmind.vijual.core.ILazy;
+import info.reflectionsofmind.vijual.core.IPattern;
+import info.reflectionsofmind.vijual.core.LApply;
+import info.reflectionsofmind.vijual.core.exception.EvaluationException;
+import info.reflectionsofmind.vijual.core.exception.TypingException;
+import info.reflectionsofmind.vijual.core.type.IType;
+import info.reflectionsofmind.vijual.core.util.Types;
+import info.reflectionsofmind.vijual.core.value.IValue;
+import info.reflectionsofmind.vijual.core.value.VFunction;
+import info.reflectionsofmind.vijual.library.type.function.TFunctionConstructor;
 
-import java.util.List;
-
-public final class EMatcher<TType extends IType> extends Expression
+public final class EMatcher extends Expression
 {
-	private final IConstructor<TType> constructor;
+	private final IPattern pattern;
 	private final Expression expression;
 	private final Expression otherwise;
 	private final IType resultType;
-	private final TFunction type;
+	private final TFunctionConstructor type;
 
-	public EMatcher(IConstructor<TType> constructor, Expression expression, Expression otherwise)
+	public EMatcher(final IPattern pattern, final Expression expression, final Expression otherwise)
 	{
-		final List<EVariable> variables = expression.getVariables();
-		final IType[] types = constructor.getArgumentTypes();
+		IType expressionOutputType = expression.getType();
+		for (final IType patternArgumentType : pattern.getArgumentTypes())
+			expressionOutputType = Types.resolve((TFunctionConstructor) expressionOutputType, patternArgumentType);
 
-		if (variables.size() < types.length) throw new TypingException("Expression does not have enough parameters to accomodate constructor's arguments.");
+		final TFunctionConstructor otherwiseType = (TFunctionConstructor) otherwise.getType();
 
-		for (int i = 0; i < types.length; i++)
-			if (!variables.get(i).getType().equals(types[i])) throw new TypingException("Cannot match types " + variables.get(i).getType() + " and " + types[i]);
+		if (otherwiseType.getArgType() != pattern.getMatchingType()) throw new RuntimeException( //
+				"Pattern and otherwise case argument types " + otherwiseType.getArgType() // 
+						+ " and " + pattern.getMatchingType() + " must match.");
 
-		if (otherwise.getVariables().isEmpty()) throw new TypingException("Otherwise expression must take matching value as parameter.");
-		if (otherwise.getVariables().get(0).getType() != constructor.getConstructedType()) throw new TypingException("Otherwise expression's parameter must match types with matching value.");
+		if (!expressionOutputType.equals(otherwiseType.getResType())) throw new RuntimeException( //
+				"Match and otherwise cases' result types " + expressionOutputType // 
+						+ " and " + otherwiseType.getResType() + " must match.");
 
-		this.constructor = constructor;
+		this.resultType = otherwiseType.getResType();
+
+		this.pattern = pattern;
 		this.expression = expression;
 		this.otherwise = otherwise;
 
-		this.type = new TFunction(this.constructor.getConstructedType(), this.resultType);
+		this.type = new TFunctionConstructor(this.pattern.getMatchingType(), this.resultType);
 	}
 
 	@Override
-	public TFunction getType()
+	public TFunctionConstructor getType()
 	{
 		return this.type;
 	}
@@ -47,21 +53,32 @@ public final class EMatcher<TType extends IType> extends Expression
 	@Override
 	public ILazy toLazy()
 	{
-		return new FFunction(getType())
+		return new VFunction(getType())
 		{
 			@Override
-			public ILazy apply(ILazy lazy) throws EvaluationException, TypingException
+			public ILazy apply(final ILazy lazy) throws EvaluationException, TypingException
 			{
+				final IValue value = lazy.evaluate();
 
-				return null;
+				if (EMatcher.this.pattern.matches(value))
+				{
+					ILazy result = EMatcher.this.expression.toLazy();
+					for (int i = value.getArguments().length - 1; i >= 0; i++)
+						result = new LApply(result, value.getArguments()[i]);
+					return result;
+				}
+				else
+				{
+					return new LApply(EMatcher.this.otherwise.toLazy(), lazy);
+				}
 			}
 		}.toLazy();
 	}
 
 	@Override
-	public Expression substitute(EVariable variable, Expression expression)
+	public Expression substitute(final EVariable variable, final Expression expression)
 	{
-		return new EMatcher<TType>(this.constructor, // 
+		return new EMatcher(this.pattern, // 
 				this.expression.substitute(variable, expression), //
 				this.otherwise.substitute(variable, expression));
 	}
