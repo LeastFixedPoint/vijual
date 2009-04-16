@@ -1,10 +1,8 @@
 package info.reflectionsofmind.vijual.core.expression;
 
-import info.reflectionsofmind.vijual.core.lazy.ILazy;
-import info.reflectionsofmind.vijual.core.lazy.IType;
+import info.reflectionsofmind.vijual.core.ILazy;
+import info.reflectionsofmind.vijual.core.type.IType;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -30,15 +28,9 @@ public final class EVariable extends Expression
 	}
 
 	@Override
-	public List<EVariable> getVariables()
-	{
-		return Collections.singletonList(this);
-	}
-
-	@Override
 	public ILazy toLazy()
 	{
-		throw new RuntimeException("Cannot directly evaluate variables");
+		throw new RuntimeException("Cannot evaluate variables.");
 	}
 
 	@Override

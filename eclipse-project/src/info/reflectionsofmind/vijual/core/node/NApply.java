@@ -1,15 +1,15 @@
 package info.reflectionsofmind.vijual.core.node;
 
-import info.reflectionsofmind.vijual.core.lazy.ILazy;
-import info.reflectionsofmind.vijual.core.lazy.IType;
-import info.reflectionsofmind.vijual.core.lazy.LApply;
-import info.reflectionsofmind.vijual.core.lazy.TFunction;
-import info.reflectionsofmind.vijual.core.lazy.exception.ArgumentNotSetException;
-import info.reflectionsofmind.vijual.core.lazy.exception.EvaluationException;
-import info.reflectionsofmind.vijual.core.lazy.exception.FunctionNotSetException;
-import info.reflectionsofmind.vijual.core.lazy.exception.NotFunctionTypeException;
-import info.reflectionsofmind.vijual.core.lazy.exception.TypingException;
-import info.reflectionsofmind.vijual.core.lazy.util.Types;
+import info.reflectionsofmind.vijual.core.ILazy;
+import info.reflectionsofmind.vijual.core.LApply;
+import info.reflectionsofmind.vijual.core.exception.ArgumentNotSetException;
+import info.reflectionsofmind.vijual.core.exception.EvaluationException;
+import info.reflectionsofmind.vijual.core.exception.FunctionNotSetException;
+import info.reflectionsofmind.vijual.core.exception.NotFunctionTypeException;
+import info.reflectionsofmind.vijual.core.exception.TypingException;
+import info.reflectionsofmind.vijual.core.type.IType;
+import info.reflectionsofmind.vijual.core.util.Types;
+import info.reflectionsofmind.vijual.library.type.function.TFunctionConstructor;
 
 public class NApply implements INode
 {
@@ -35,11 +35,11 @@ public class NApply implements INode
 		if (this.functionNode == null) throw new FunctionNotSetException(this);
 		if (this.argumentNode == null) throw new ArgumentNotSetException(this);
 
-		if (!(this.functionNode.getType() instanceof TFunction)) throw new NotFunctionTypeException(this);
+		if (!(this.functionNode.getType() instanceof TFunctionConstructor)) throw new NotFunctionTypeException(this);
 
-		final TFunction funType = (TFunction) this.functionNode.getType();
+		final TFunctionConstructor funType = (TFunctionConstructor) this.functionNode.getType();
 		final IType argType = this.argumentNode.getType();
-		final IType resType = Types.substitute(funType.getResType(), Types.solve(argType, funType.getArgType()));
+		final IType resType = Types.applySubstitutions(funType.getResType(), Types.solve(argType, funType.getArgType()));
 
 		return resType;
 	}

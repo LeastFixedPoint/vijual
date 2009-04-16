@@ -1,17 +1,17 @@
 package info.reflectionsofmind.vijual.library.function;
 
-import info.reflectionsofmind.vijual.core.lazy.FFunction;
-import info.reflectionsofmind.vijual.core.lazy.ILazy;
-import info.reflectionsofmind.vijual.core.lazy.TFunction;
-import info.reflectionsofmind.vijual.core.lazy.exception.EvaluationException;
-import info.reflectionsofmind.vijual.core.lazy.exception.TypingException;
-import info.reflectionsofmind.vijual.core.lazy.util.DerivedFunction;
-import info.reflectionsofmind.vijual.library.data.integer.CInteger;
-import info.reflectionsofmind.vijual.library.data.integer.TInteger;
+import info.reflectionsofmind.vijual.core.ILazy;
+import info.reflectionsofmind.vijual.core.exception.EvaluationException;
+import info.reflectionsofmind.vijual.core.exception.TypingException;
+import info.reflectionsofmind.vijual.core.util.DerivedFunction;
+import info.reflectionsofmind.vijual.core.value.VFunction;
+import info.reflectionsofmind.vijual.library.type.function.TFunctionConstructor;
+import info.reflectionsofmind.vijual.library.type.integer.CInteger;
+import info.reflectionsofmind.vijual.library.type.integer.TInteger;
 
-public final class IntSum extends FFunction
+public final class IntSum extends VFunction
 {
-	private final static TFunction TYPE = new TFunction(TInteger.INSTANCE, new TFunction(TInteger.INSTANCE, TInteger.INSTANCE));
+	private final static TFunctionConstructor TYPE = new TFunctionConstructor(TInteger.INSTANCE, new TFunctionConstructor(TInteger.INSTANCE, TInteger.INSTANCE));
 	public final static IntSum INSTANCE = new IntSum();
 	
 	private IntSum()
