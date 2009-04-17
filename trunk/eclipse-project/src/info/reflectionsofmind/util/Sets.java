@@ -1,5 +1,6 @@
 package info.reflectionsofmind.util;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +24,13 @@ public final class Sets
 
 		final HashSet<T> result = new HashSet<T>(set);
 		result.remove(element);
+		return result;
+	}
+	
+	public static <T> Set<T> subtract(final Set<T> set, final Collection<T> elements)
+	{
+		final HashSet<T> result = new HashSet<T>(set);
+		result.removeAll(elements);
 		return result;
 	}
 }

@@ -8,7 +8,7 @@ public final class Vinteger extends VPrimitive
 
 	public Vinteger(int value)
 	{
-		super(TInteger.INSTANCE);
+		super(String.valueOf(value), TInteger.INSTANCE);
 		this.value = value;
 	}
 

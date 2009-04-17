@@ -42,7 +42,8 @@ public final class Types
 		final List<IType<?>> componentTypes = new ArrayList<IType<?>>();
 		componentTypes.add(constructedType.getArgument());
 
-		if (constructedType.getConstructor() instanceof ITypeConstructed<?, ?>) componentTypes.addAll(getTypeComponents(constructedType));
+		if (constructedType.getConstructor() instanceof ITypeConstructed<?, ?>) // 
+			componentTypes.addAll(getTypeComponents((ITypeConstructed<?, ?>) constructedType.getConstructor()));
 
 		return componentTypes;
 	}
@@ -130,8 +131,10 @@ public final class Types
 	{
 		IType<KKind> result = type;
 
+		Set<TVariable<?>> originalVariables = type.getTypeVariables();
+
 		for (final TypeEquation<?> substitution : subs)
-			result = applySubstitution(substitution, result);
+			if (originalVariables.contains(substitution.getVar())) result = applySubstitution(substitution, result);
 
 		return result;
 	}

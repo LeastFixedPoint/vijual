@@ -1,5 +1,8 @@
-package info.reflectionsofmind.vijual.core;
+package info.reflectionsofmind.vijual.core.lazy;
 
+import java.util.Set;
+
+import info.reflectionsofmind.util.Sets;
 import info.reflectionsofmind.vijual.core.type.ITypeDefined;
 import info.reflectionsofmind.vijual.core.util.Types;
 import info.reflectionsofmind.vijual.core.value.IFunction;
@@ -19,6 +22,12 @@ public final class LApply implements ILazy
 		this.function = function;
 		this.argument = argument;
 	}
+	
+	@Override
+	public Set<LVariable> getVariables()
+	{
+		return Sets.union(this.function.getVariables(), this.argument.getVariables());
+	}
 
 	@Override
 	public IValue evaluate()
@@ -27,9 +36,35 @@ public final class LApply implements ILazy
 	}
 
 	@Override
+	public ILazy substitute(final LVariable variable, final ILazy expression)
+	{
+		final ILazy newFunction = this.function.substitute(variable, expression);
+		final ILazy newArgument = this.argument.substitute(variable, expression);
+
+		if (this.function == newFunction && this.argument == newArgument)
+		{
+			return this;
+		}
+		else
+		{
+			return new LApply(newFunction, newArgument);
+		}
+	}
+
+	@Override
 	public ITypeDefined getType()
 	{
 		return this.type;
+	}
+
+	public ILazy getFunction()
+	{
+		return this.function;
+	}
+
+	public ILazy getArgument()
+	{
+		return this.argument;
 	}
 
 	@Override
