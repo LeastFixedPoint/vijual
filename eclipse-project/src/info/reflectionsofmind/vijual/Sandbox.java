@@ -1,9 +1,15 @@
 package info.reflectionsofmind.vijual;
 
-import info.reflectionsofmind.vijual.core.ILazy;
-import info.reflectionsofmind.vijual.core.LApply;
 import info.reflectionsofmind.vijual.core.kind.KConstructor;
 import info.reflectionsofmind.vijual.core.kind.KDefined;
+import info.reflectionsofmind.vijual.core.lazy.Context;
+import info.reflectionsofmind.vijual.core.lazy.ILazy;
+import info.reflectionsofmind.vijual.core.lazy.LApply;
+import info.reflectionsofmind.vijual.core.lazy.LLambda;
+import info.reflectionsofmind.vijual.core.lazy.LMatch;
+import info.reflectionsofmind.vijual.core.lazy.LVariable;
+import info.reflectionsofmind.vijual.core.pattern.IPattern;
+import info.reflectionsofmind.vijual.core.pattern.PPattern;
 import info.reflectionsofmind.vijual.core.type.IType;
 import info.reflectionsofmind.vijual.core.type.ITypeConstructed;
 import info.reflectionsofmind.vijual.core.type.ITypeConstructor;
@@ -11,7 +17,9 @@ import info.reflectionsofmind.vijual.core.type.ITypeDefined;
 import info.reflectionsofmind.vijual.core.type.ITypeDefinedConstructed;
 import info.reflectionsofmind.vijual.core.type.TDefinedVariable;
 import info.reflectionsofmind.vijual.core.util.Types;
+import info.reflectionsofmind.vijual.library.function.IntSum;
 import info.reflectionsofmind.vijual.library.type.TSwapperConstructor;
+import info.reflectionsofmind.vijual.library.type.function.TFunction;
 import info.reflectionsofmind.vijual.library.type.function.TFunctionConstructor;
 import info.reflectionsofmind.vijual.library.type.integer.Vinteger;
 import info.reflectionsofmind.vijual.library.type.list.TList;
@@ -28,50 +36,35 @@ public class Sandbox extends JFrame
 
 	public static void main(final String[] args) throws Exception
 	{
-		final TDefinedVariable a = new TDefinedVariable("a");
-		final TDefinedVariable b = new TDefinedVariable("b");
+		final TDefinedVariable a = new TDefinedVariable("ax");
+		final TDefinedVariable b = new TDefinedVariable("bx");
 
-		final TSwapperConstructor tswapper = TSwapperConstructor.INSTANCE;
-		final TListConstructor tlist = TListConstructor.INSTANCE;
-		final TFunctionConstructor tfunction = TFunctionConstructor.INSTANCE;
-		
-		ILazy list = TList.EMPTY.toLazy();
-		list = new LApply(new LApply(TList.PREPEND.toLazy(), new Vinteger(1).toLazy()), list);
-		list = new LApply(new LApply(TList.PREPEND.toLazy(), new Vinteger(2).toLazy()), list);
-		System.out.println(list.evaluate());
-		
-		System.exit(0);
+		Context context = new Context();
 
-		final ITypeDefinedConstructed<KDefined> t1 = tlist.apply(a);
-		print(t1);
+		Context.LReference map = context.new LReference("map", new TFunction(new TFunction(a, b), new TFunction(new TList(a), new TList(b))));
 
-		final ITypeConstructed<KDefined, KConstructor<KDefined, KDefined>> t2 = tfunction.apply(a);
-		print(t2);
+		LVariable f = new LVariable("f", new TFunction(a, b));
+		LVariable list = new LVariable("list", new TList(a));
+		LVariable head = new LVariable("head", a);
+		LVariable tail = new LVariable("tail", new TList(a));
 
-		final ITypeDefinedConstructed<KDefined> t3 = tfunction.apply(a, b);
-		print(t3);
+		IPattern pattern = new PPattern(new LApply(new LApply(TList.newPrepend().toLazy(), head), tail), head, tail);
 
-		final ITypeDefinedConstructed<KDefined> t4 = tfunction.apply((ITypeDefined) t1, (ITypeDefined) tlist.apply(b));
-		print(t4);
+		System.out.println("Pattern: " + new LApply(new LApply(TList.newPrepend().toLazy(), head), tail).getType());
 
-		final ITypeConstructed<KConstructor<KDefined, KConstructor<KDefined, KDefined>>, KConstructor<KDefined, KConstructor<KDefined, KDefined>>> t5 = tswapper.apply(tfunction);
-		print(t5);
+		ILazy ifMatched = new LLambda(head, new LLambda(tail, // 
+				new LApply( //
+						new LApply(TList.newPrepend().toLazy(), new LApply(f, head)), // Prepend (f head)
+						new LApply(new LApply(map, f), tail)))); // (map f) tail
 
-		final IType<KDefined> t6 = tfunction.apply((ITypeDefined) t1, (ITypeDefined) t1);
-		print(t6);
+		System.out.println("IfMatched: " + ifMatched.getType());
 
-		final ITypeConstructor<KDefined, KDefined> t7 = t6.toTypeFunction(a);
-		print(t7);
+		ILazy otherwise = new LLambda(new LVariable("_", new TList(a)), TList.newEmpty().toLazy());
 
-		final ITypeDefinedConstructed<KDefined> t8 = (ITypeDefinedConstructed<KDefined>) t7.apply(tlist.apply(b));
-		print(t8);
+		System.out.println("Otherwise: " + otherwise.getType());
 
-		System.out.println();
-		System.out.println();
-		System.out.println();
+		context.bind("map", new LLambda(f, new LLambda(list, new LMatch(pattern, ifMatched, otherwise))));
 
-		System.out.println(Types.getRootConstructor(t8));
-		System.out.println(Types.getArgType(t8));
-		System.out.println(Types.getResType(t8));
+		System.out.println(context.resolve("map").getType());
 	}
 }

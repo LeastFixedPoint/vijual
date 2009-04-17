@@ -4,9 +4,9 @@ import info.reflectionsofmind.vijual.library.type.template.TPrimitive;
 
 public abstract class VPrimitive extends Value implements IDefined
 {
-	public VPrimitive(TPrimitive type)
+	public VPrimitive(String name, TPrimitive type)
 	{
-		super(type);
+		super(name, type);
 	}
 
 	@Override

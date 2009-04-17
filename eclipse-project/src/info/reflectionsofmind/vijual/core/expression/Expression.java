@@ -1,6 +1,6 @@
 package info.reflectionsofmind.vijual.core.expression;
 
-import info.reflectionsofmind.vijual.core.ILazy;
+import info.reflectionsofmind.vijual.core.lazy.ILazy;
 import info.reflectionsofmind.vijual.core.type.IType;
 
 public abstract class Expression

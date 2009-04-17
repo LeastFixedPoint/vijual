@@ -2,9 +2,9 @@ package info.reflectionsofmind.vijual.core.expression;
 
 import java.util.Arrays;
 
-import info.reflectionsofmind.vijual.core.ILazy;
 import info.reflectionsofmind.vijual.core.exception.EvaluationException;
 import info.reflectionsofmind.vijual.core.exception.TypingException;
+import info.reflectionsofmind.vijual.core.lazy.ILazy;
 import info.reflectionsofmind.vijual.core.value.VFunction;
 import info.reflectionsofmind.vijual.library.type.function.TFunctionConstructor;
 

@@ -1,12 +1,12 @@
 package info.reflectionsofmind.vijual.core.node;
 
-import info.reflectionsofmind.vijual.core.ILazy;
-import info.reflectionsofmind.vijual.core.LApply;
 import info.reflectionsofmind.vijual.core.exception.ArgumentNotSetException;
 import info.reflectionsofmind.vijual.core.exception.EvaluationException;
 import info.reflectionsofmind.vijual.core.exception.FunctionNotSetException;
 import info.reflectionsofmind.vijual.core.exception.NotFunctionTypeException;
 import info.reflectionsofmind.vijual.core.exception.TypingException;
+import info.reflectionsofmind.vijual.core.lazy.ILazy;
+import info.reflectionsofmind.vijual.core.lazy.LApply;
 import info.reflectionsofmind.vijual.core.type.IType;
 import info.reflectionsofmind.vijual.core.util.Types;
 import info.reflectionsofmind.vijual.library.type.function.TFunctionConstructor;

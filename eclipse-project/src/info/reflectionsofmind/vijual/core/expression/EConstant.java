@@ -1,7 +1,7 @@
 package info.reflectionsofmind.vijual.core.expression;
 
-import info.reflectionsofmind.vijual.core.ILazy;
-import info.reflectionsofmind.vijual.core.LValue;
+import info.reflectionsofmind.vijual.core.lazy.ILazy;
+import info.reflectionsofmind.vijual.core.lazy.LValue;
 import info.reflectionsofmind.vijual.core.type.IType;
 import info.reflectionsofmind.vijual.core.value.IValue;
 

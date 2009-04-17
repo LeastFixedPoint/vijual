@@ -1,18 +1,19 @@
 package info.reflectionsofmind.vijual.core.value;
 
-import info.reflectionsofmind.vijual.core.type.ITypeDefined;
+import info.reflectionsofmind.vijual.core.lazy.ILazy;
+import info.reflectionsofmind.vijual.core.util.Types;
 import info.reflectionsofmind.vijual.library.type.function.TFunction;
 
 public abstract class VFunction extends Value implements IFunction
 {
-	public VFunction(ITypeDefined argType, ITypeDefined resType)
+	public VFunction(String name, TFunction functionType)
 	{
-		this(new TFunction(argType, resType));
+		super(name, functionType);
 	}
 
 	public VFunction(TFunction functionType)
 	{
-		super(functionType);
+		this("[function: " + functionType.getArgType() + " -> " + functionType.getResType() + "]", functionType);
 	}
 
 	@Override
@@ -21,9 +22,11 @@ public abstract class VFunction extends Value implements IFunction
 		return (TFunction) super.getType();
 	}
 
-	@Override
-	public String toString()
+	public static abstract class Derived extends VFunction
 	{
-		return "[function: " + getType().getArgType() + " -> " + getType().getResType() + "]";
+		public Derived(VFunction function, ILazy argument)
+		{
+			super((TFunction) Types.resolve(function.getType(), argument.getType()));
+		}
 	}
 }
